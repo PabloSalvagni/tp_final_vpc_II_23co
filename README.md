@@ -31,8 +31,8 @@ El dataset seleccionado para realizar el [TP es Sunflower (ryan 8018)][https://u
 
 **Ficha Técnica para el Paper:**
 
-**Origen:** Roboflow Universe.
-**Tarea:** Object Detection (Bounding Boxes).
-**Etiquetas:** Identificación de capítulos de girasol (Sunflower heads).
-**Pre-procesamiento sugerido:** Dada la naturaleza del cultivo, aplicaremos Data Augmentation (rotaciones aleatorias y cambios de brillo/saturación) para simular diferentes condiciones de luz solar y ángulos de toma de cámara, evitando el overfitting.
-**División de datos:** Se respetará una estructura de 70% entrenamiento, 20% validación y 10% testeo para asegurar la robustez de los resultados.
+- **Origen:** Roboflow Universe.
+- **Tarea:** Object Detection (Bounding Boxes).
+- **Etiquetas:** Identificación de capítulos de girasol (Sunflower heads).
+- **Pre-procesamiento sugerido:** Dada la naturaleza del cultivo, aplicaremos Data Augmentation (rotaciones aleatorias y cambios de brillo/saturación) para simular diferentes condiciones de luz solar y ángulos de toma de cámara, evitando el overfitting.
+- **División de datos:** Se respetará una estructura de 70% entrenamiento, 20% validación y 10% testeo para asegurar la robustez de los resultados.
