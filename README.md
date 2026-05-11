@@ -5,7 +5,7 @@ Repositorio de Trabajo Final de Vision por Computadora II
 - Pablo Salvagni
 - Rodrigo Parra
 
-## Título TP
+## Título TP
 Conteo automático de capítulos (flores) de girasol para asistencia en la estimación de rendimiento agrícola.
 
 
