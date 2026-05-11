@@ -27,7 +27,7 @@ Para resolver este problema, se propone la implementación de un modelo de **Det
 **Métricas de Validación:** La solución se validará mediante el cálculo del **mAP (mean Average Precision)** y la **Latencia de Inferencia**, evaluando la factibilidad de uso en escenarios de tiempo real, como dispositivos móviles y drones
 
 #### Análisis del Dataset (Roboflow)
-El dataset seleccionado para realizar el [TP es Sunflower (ryan 8018)][https://universe.roboflow.com/raiyan8018/sunflower-mn2cr].
+El dataset seleccionado para realizar el [TP es Sunflower (ryan 8018)](https://universe.roboflow.com/raiyan8018/sunflower-mn2cr)
 
 **Ficha Técnica para el Paper:**
 
