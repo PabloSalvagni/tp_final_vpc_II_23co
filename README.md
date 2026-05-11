@@ -26,7 +26,7 @@ Para resolver este problema, se propone la implementación de un modelo de **Det
 3. Lógica de conteo basada en la cantidad de bounding boxes detectadas con un umbral de confianza específico.
 **Métricas de Validación:** La solución se validará mediante el cálculo del **mAP (mean Average Precision)** y la **Latencia de Inferencia**, evaluando la factibilidad de uso en escenarios de tiempo real, como dispositivos móviles y drones
 
-## Análisis del Dataset (Roboflow)
+#### Análisis del Dataset (Roboflow)
 El dataset seleccionado para realizar el [TP es Sunflower (ryan 8018)][https://universe.roboflow.com/raiyan8018/sunflower-mn2cr].
 
 **Ficha Técnica para el Paper:**
