@@ -1,0 +1,8 @@
+opencv-python
+matplotlib
+seaborn
+pandas
+numpy
+roboflow
+python-dotenv
+ipykernel

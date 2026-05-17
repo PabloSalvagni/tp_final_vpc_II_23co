@@ -1,0 +1,22 @@
+# Entornos virtuales
+.venv/
+venv/
+ENV/
+
+# Archivos de configuración local y credenciales
+.env
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# DATASET (Ignorar las descargas locales de Roboflow)
+/datasets/
+*-dataset/
+*.zip
+*.tar.gz
+
+# Pesos de modelos y outputs de YOLO
+*.pt
+*.onnx
+/runs/
