@@ -20,3 +20,11 @@ ENV/
 *.pt
 *.onnx
 /runs/
+
+# Dataset descargado localmente
+Sunflower-1/
+sunflower_unified/
+
+# Logs y runs de wandb
+wandb/
+*.log
