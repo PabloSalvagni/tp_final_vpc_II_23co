@@ -21,6 +21,9 @@ ENV/
 *.onnx
 /runs/
 
+# Excepción: pesos de ejemplo en la carpeta models/
+!models/**/*.pt
+
 # Dataset descargado localmente
 Sunflower-1/
 sunflower_unified/
