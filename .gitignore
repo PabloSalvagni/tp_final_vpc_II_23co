@@ -6,7 +6,6 @@ ENV/
 # Archivos de configuración local y credenciales
 .env
 .env.*
-sunflower_unified/
 !.env.example
 !**/.env.example
 
@@ -24,7 +23,6 @@ sunflower_unified/
 *.pt
 *.onnx
 /models/
-runs/             
 **/temp_* 
 *.cache
 
@@ -33,3 +31,15 @@ __pycache__/
 *.py[cod]
 .DS_Store
 Thumbs.db
+/runs/
+
+# Excepción: pesos de ejemplo en la carpeta models/
+!models/**/*.pt
+
+# Dataset descargado localmente
+Sunflower-1/
+sunflower_unified/
+
+# Logs y runs de wandb
+wandb/
+*.log
