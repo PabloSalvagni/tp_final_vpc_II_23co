@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+python-multipart
+ultralytics
+opencv-python-headless
+sqlalchemy
+psycopg2-binary

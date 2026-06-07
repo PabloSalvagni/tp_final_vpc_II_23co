@@ -1,0 +1,57 @@
+# Stack local — Conteo de Girasoles (TP VPC II)
+# Requiere archivo .env (copiar desde .env.example). Sin .env el stack no levanta.
+
+services:
+  db:
+    image: postgres:14
+    container_name: vpc_postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?Definir POSTGRES_USER en .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Definir POSTGRES_PASSWORD en .env}
+      POSTGRES_DB: ${POSTGRES_DB:?Definir POSTGRES_DB en .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - vpc_network
+    # Sin 'ports': Postgres solo accesible desde la red interna Docker
+
+  api:
+    build:
+      context: ./api
+    container_name: vpc_api
+    ports:
+      - "127.0.0.1:${API_PORT:-8000}:8000"
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      ENABLE_DOCS: ${ENABLE_DOCS:-false}
+    volumes:
+      - ./api:/app
+      - ./pesos:/app/pesos:ro
+    depends_on:
+      - db
+    networks:
+      - vpc_network
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+
+  streamlit:
+    build:
+      context: ./streamlit
+    container_name: vpc_streamlit
+    ports:
+      - "127.0.0.1:${STREAMLIT_PORT:-8501}:8501"
+    environment:
+      API_URL: http://api:8000
+    volumes:
+      - ./streamlit:/app
+    depends_on:
+      - api
+    networks:
+      - vpc_network
+    command: streamlit run app.py --server.port=8501 --server.address=0.0.0.0
+
+networks:
+  vpc_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
