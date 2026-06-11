@@ -5,6 +5,9 @@ ENV/
 
 # Archivos de configuración local y credenciales
 .env
+.env.*
+!.env.example
+!**/.env.example
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
@@ -16,9 +19,18 @@ ENV/
 *.zip
 *.tar.gz
 
-# Pesos de modelos y outputs de YOLO
+# Modelos y entrenamiento
 *.pt
 *.onnx
+/models/
+**/temp_* 
+*.cache
+
+# Python / OS
+__pycache__/
+*.py[cod]
+.DS_Store
+Thumbs.db
 /runs/
 
 # Excepción: pesos de ejemplo en la carpeta models/
