@@ -108,7 +108,6 @@ def procesar_video_en_vivo(uploaded_file, panel):
         metric_slot = st.empty()
         progress = st.progress(0, text="Procesando video frame a frame...")
 
-    conteo_acumulado = 0
     frame_idx = 0
 
     try:
@@ -127,7 +126,6 @@ def procesar_video_en_vivo(uploaded_file, panel):
                     break
 
                 conteo_frame = int(response.headers.get("X-Conteo", 0))
-                conteo_acumulado += conteo_frame
 
                 img_frame = Image.open(io.BytesIO(response.content))
                 frame_slot.image(
@@ -135,7 +133,7 @@ def procesar_video_en_vivo(uploaded_file, panel):
                     caption=f"Frame {frame_idx + 1}/{total_frames}",
                     use_container_width=True,
                 )
-                metric_slot.metric("Conteo acumulado", conteo_acumulado)
+                metric_slot.metric("Girasoles en pantalla", conteo_frame)
                 progress.progress(
                     min((frame_idx + 1) / total_frames, 1.0),
                     text=f"Frame {frame_idx + 1}/{total_frames}",
@@ -148,7 +146,7 @@ def procesar_video_en_vivo(uploaded_file, panel):
 
     with panel:
         progress.empty()
-        st.success(f"¡Video procesado! Conteo total acumulado: **{conteo_acumulado} detecciones**.")
+        st.success("¡Video procesado!")
 
 
 def procesar_video_completo(uploaded_file, panel):

@@ -3,6 +3,7 @@
 import os
 import time
 import tempfile
+import subprocess
 import cv2
 import numpy as np
 from fastapi import FastAPI, UploadFile, File, HTTPException
@@ -68,10 +69,33 @@ def leer_imagen(contents: bytes) -> np.ndarray:
     return img
 
 
+BOX_COLOR = (255, 80, 0)
+BOX_W = 1
+BAR_H = 40
+
+
+def dibujar_cajas(frame: np.ndarray, boxes) -> np.ndarray:
+    anotada = frame.copy()
+    for box in boxes:
+        x1, y1, x2, y2 = map(int, box.xyxy[0].tolist())
+        cv2.rectangle(anotada, (x1, y1), (x2, y2), BOX_COLOR, BOX_W)
+    return anotada
+
+
+def dibujar_overlay_conteo(frame: np.ndarray, texto: str) -> np.ndarray:
+    height, width = frame.shape[:2]
+    overlay = frame.copy()
+    cv2.rectangle(overlay, (0, height - BAR_H), (width, height), (20, 20, 20), -1)
+    cv2.addWeighted(overlay, 0.6, frame, 0.4, 0, frame)
+    cv2.putText(frame, texto, (12, height - 12),
+                cv2.FONT_HERSHEY_SIMPLEX, 0.65, (255, 255, 255), 1, cv2.LINE_AA)
+    return frame
+
+
 def inferir_frame(img: np.ndarray):
     results = model.predict(img, conf=0.4, verbose=False)
     conteo = len(results[0].boxes)
-    anotada = results[0].plot()
+    anotada = dibujar_cajas(img, results[0].boxes)
     return conteo, anotada
 
 
@@ -134,22 +158,42 @@ async def predict(file: UploadFile = File(...)):
             height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
             cap.release()
 
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as tmp_out:
-                output_path = tmp_out.name
-            fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-            writer = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".avi") as tmp_out:
+                raw_output_path = tmp_out.name
+            output_path = raw_output_path.replace(".avi", ".mp4")
+            fourcc = cv2.VideoWriter_fourcc(*"XVID")
+            writer = cv2.VideoWriter(raw_output_path, fourcc, fps, (width, height))
 
-            conteo = 0
-            results = model.predict(source=temp_filename, conf=0.4, stream=True, verbose=False)
+            ids_vistos = set()
+            results = model.track(
+                source=temp_filename,
+                conf=0.4,
+                tracker="bytetrack.yaml",
+                persist=True,
+                stream=True,
+                verbose=False,
+            )
             for result in results:
-                conteo += len(result.boxes)
-                writer.write(result.plot())
+                frame = dibujar_cajas(result.orig_img, result.boxes)
+                if result.boxes.id is not None:
+                    for tid in result.boxes.id.tolist():
+                        ids_vistos.add(int(tid))
+                texto = f"En pantalla: {len(result.boxes)}   |   Total vistos: {len(ids_vistos)}"
+                frame = dibujar_overlay_conteo(frame, texto)
+                writer.write(frame)
             writer.release()
+            conteo = len(ids_vistos)
+
+            # Convertimos a H.264 para que el navegador pueda reproducir el video
+            subprocess.run(
+                ["ffmpeg", "-y", "-i", raw_output_path, "-c:v", "libx264", "-crf", "23", "-preset", "fast", output_path],
+                check=True, capture_output=True,
+            )
 
             with open(output_path, "rb") as f:
                 video_bytes = f.read()
         finally:
-            for path in (temp_filename, "temp_output.mp4"):
+            for path in (temp_filename, raw_output_path, output_path):
                 if os.path.exists(path):
                     os.remove(path)
 
