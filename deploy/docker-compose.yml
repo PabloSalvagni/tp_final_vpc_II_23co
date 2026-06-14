@@ -32,13 +32,6 @@ services:
     networks:
       - vpc_network
     command: uvicorn main:app --host 0.0.0.0 --port 8000
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
 
   streamlit:
     build:
