@@ -69,8 +69,8 @@ def leer_imagen(contents: bytes) -> np.ndarray:
     return img
 
 
-BOX_COLOR = (255, 80, 0)
-BOX_W = 1
+BOX_COLOR = (0, 0, 255)
+BOX_W = 3
 BAR_H = 40
 
 
