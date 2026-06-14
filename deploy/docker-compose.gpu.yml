@@ -1,0 +1,15 @@
+# Override para habilitar GPU NVIDIA en el servicio api.
+# Requiere NVIDIA Container Toolkit instalado en el host.
+#
+# Uso:
+#   docker compose -f docker-compose.yml -f docker-compose.gpu.yml up --build -d
+
+services:
+  api:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
