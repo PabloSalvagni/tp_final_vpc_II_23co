@@ -47,6 +47,17 @@ El dataset seleccionado para realizar el TP es [Sunflower (ryan 8018)](https://u
 - **División de datos:** Se respetará una estructura de 70% entrenamiento, 20% validación y 10% testeo para asegurar la robustez de los resultados.
 
 ---
+**DEMO VISUAL**
+- **Video con ejemplos de inferencia:** Se presenta una demo de como funciona la UI desarrollada que corre el modelo YOLOs11_SGD en distintos casos [VER VIDEO](https://youtu.be/2mL00aEuT0c)
+```text
+Casos/
+  ├── Caso 1: sin capitulos visibles.
+  ├── Caso 2: Densidad baja.
+  ├── Caso 3: Densidad media.
+  ├── Caso 4: Densidad alta con Baja iluminación.
+  ├── Caso 5: Densidad alta de Imagen creada con IA.
+  ├── Caso 6: Video capturado con Dron.
+```
 
 ## Estructura del Repositorio
 
@@ -55,29 +66,29 @@ Para facilitar la lectura, reproducibilidad y corrección del proyecto, el códi
 ```text
 tp_final_vpc_II_23co/
 │
-├── README.md                 <- Presentación del TP, integrantes y guía de uso.
-├── requirements.txt          <- Dependencias necesarias para ejecutar el proyecto.
-├── .gitignore                <- Archivos ignorados por git (pesos intermedios, datasets locales, etc.).
+├── README.md                           <- Presentación del TP, integrantes y guía de uso.
+├── requirements.txt                    <- Dependencias necesarias para ejecutar el proyecto.
+├── .gitignore                          <- Archivos ignorados por git (pesos intermedios, datasets locales, etc.).
 │
-├── notebooks/                <- Notebooks finales de investigación y experimentación (ordenadas lógicamente).
+├── notebooks/                          <- Notebooks finales de investigación y experimentación (ordenadas lógicamente).
 │   ├── 01_eda_y_procesamiento.ipynb
 │   ├── 02_entrenamiento_yolo.ipynb
 │   └── 03_inferencia_y_metricas.ipynb
-│   └── colab/                <- Notebooks preliminares de investigación y experimentación para Colab.
-│   └── local/                <- Notebooks preliminares de investigación y experimentación para ejecucion local.
+│   └── colab/                          <- Notebooks preliminares de investigación y experimentación para Colab.
+│   └── local/                          <- Notebooks preliminares de investigación y experimentación para ejecucion local.
 
 │
-├── deploy/                   <- Código para el despliegue del modelo y demo de inferencia.
-│   └── app.py                <- Script principal para la demostración.
+├── deploy/                             <- Código para el despliegue del modelo y demo de inferencia.
+│   └── app.py                          <- Script principal para la demostración.
 │
-├── models/                   <- Modelo entrenado.
-│   └── best.pt               <- Mejores pesos del modelo entrenado para la clase "sunflower".
+├── models/                             <- Modelo entrenado.
+│   └── best.pt                         <- Mejores pesos del modelo entrenado para la clase "sunflower".
 │
-├── reports/                  <- Documentación y resultados gráficos del proyecto.
-│   ├── figures/              <- Gráficas de evolución, matrices de confusión y métricas.
-│   └── TP_VpC2_Presentacion.pdf           <- Documento final en formato paper.
-│   └── TP_VpC2.pdf           <- Documento final en formato paper.
+├── reports/                            <- Documentación y resultados gráficos del proyecto.
+│   ├── figures/                        <- Gráficas de evolución, matrices de confusión y métricas.
+│   └── TP_VpC2_Presentacion.pdf        <- Documento de presentación en clase.
+│   └── TP_VpC2.pdf                     <- Documento final en formato paper.
 │
-├── runs/                     <- Logs y salidas automáticas del entrenamiento de YOLO.
+├── runs/                               <- Logs y salidas automáticas del entrenamiento de YOLO.
 │
-└── outputs/                  <- Resultados visuales de la inferencia (imágenes/videos de prueba).
+└── outputs/                            <- Resultados visuales de la inferencia (imágenes/videos de prueba).
